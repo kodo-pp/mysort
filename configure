@@ -1,0 +1,107 @@
+#!/bin/bash
+
+use_ruru=0
+if locale | grep LC_MESSAGES | grep -iq 'ru'; then
+	use_ruru=1
+fi
+
+show_help()
+{
+	if [ $use_ruru == 1 ]; then
+		echo -e "\e[1;35mИспользование\e[0m: $0 [--help] [--prefix=ПРЕФИКС] [--progname=ИМЯ_ИСПОЛНЯЕМОГО_ФАЙЛА]"
+		echo -e "    \e[1;34m--help\e[0m: показать эту справку"
+		echo -e "    \e[1;34m--prefix\e[0m=\e[1;36mПРЕФИКС\e[0m: выполнить установку в \e[1mПРЕФИКС\e[0m (по умолчанию: \e[1m'/usr/local'\e[0m)"
+		echo -e "    \e[1;34m--progname\e[0m=\e[1;36mИМЯ_ИСПОЛНЯЕМОГО_ФАЙЛА\e[0m: присвоить исполняемому файлу имя \e[1mИМЯ_ИСПОЛНЯЕМОГО_ФАЙЛА\e[0m (по умолчанию: \e[1m'mysort'\e[0m)"
+	else
+		echo -e "\e[1;35mUsage\e[0m: $0 [--help] [--prefix=PREFIX] [--progname=NAME]"
+		echo -e "    \e[1;34m--help\e[0m: show this help"
+		echo -e "    \e[1;34m--prefix\e[0m=\e[1;36mPREFIX\e[0m: install files to \e[1mPREFIX\e[0m (defaults to \e[1m'/usr/local'\e[0m)"
+		echo -e "    \e[1;34m--progname\e[0m=\e[1;36mNAME\e[0m: set the name of executable file to \e[1mNAME\e[0m (defaults to \e[1m'mysort'\e[0m)"
+	fi
+	exit 0
+}
+
+prefix="/usr/local"
+progname="mysort"
+
+while ! [ -z "$1" ]; do
+	case $1 in
+		--help)
+			show_help
+			exit 0
+			;;
+		--prefix=*)
+			prefix=`echo $1 | sed 's/^--prefix\=//g'`
+			;;
+		--progname=*)
+			progname=`echo $1 | sed 's/^--progname\=//g'`
+			;;
+		*)
+			if [ $use_ruru == 1 ]; then
+				echo "Неизвестный аргумент '$1'"
+				echo "См. '$0 --help' для справки"
+			else
+				echo "Unknown argument '$1'"
+				echo "See '$0 --help' to get help"
+			fi
+			exit 1
+			;;
+	esac
+	shift
+done
+
+ans="n"
+
+if [ $use_ruru == 1 ]; then
+	echo -e "\e[1;35mКонфигурация:\e[0m"
+	echo -e "    Префикс: \e[1m'$prefix'\e[0m"
+	echo -e "    Имя исполняемого файла: \e[1m'$progname'\e[0m"
+	echo ""
+	echo -ne "Продолжить? [д/н]: \e[1m"
+else	
+	echo -e "\e[1;35mConfiguration:\e[0m"
+	echo -e "    Prefix: \e[1m'$prefix'\e[0m"
+	echo -e "    Executable file name: \e[1m'$progname'\e[0m"
+	echo ""
+	echo -ne "Proceed? [y/n]: \e[1m"
+fi
+read ans
+echo -ne "\e[0m"
+case $ans in
+	y|Y|yes|Yes|YES|д|Д|да|Да|ДА)
+		true
+		;;
+	*)
+		if [ $use_ruru == 1 ]; then
+			echo 'Файлы не были изменены, остановка…'
+		else
+			echo 'Files were not changed, aborting…'
+		fi
+		exit 1
+esac
+
+if [ $use_ruru == 1 ]; then
+	echo -ne 'Создание \e[1mMakefile\e[0m из \e[1mmakefile.raw\e[0m… '
+else
+	echo -ne 'Generating \e[1mMakefile\e[0m from \e[1mmakefile.raw\e[0m… '
+fi
+
+if ! [ -f makefile.raw ]; then
+	if [ $use_ruru == 1 ]; then
+		echo -e '\e[1;31mошибка\e[0m: файл \e[1mmakefile.raw\e[0m не найден'
+	else
+		echo -e '\e[1;31mfailed\e[0m: file \e[1mmakefile.raw\e[0m not found'
+	fi
+	exit 2
+fi
+
+cat makefile.raw | sed -e "s|\*\*\*SUBST_PREFIX\*\*\*|$prefix|g" \
+                       -e "s|\*\*\*SUBST_PROGNAME\*\*\*|$progname|g" \
+                       > Makefile
+
+if [ $use_ruru == 1 ]; then
+	echo -e '\e[1;32mготово\e[0m'
+else
+	echo -e '\e[1;32mdone\e[0m'
+fi
+
