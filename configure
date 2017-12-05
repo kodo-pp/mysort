@@ -56,7 +56,6 @@ while ! [ -z "$1" ]; do
     shift
 done
 
-ans="n"
 
 if [ $use_ruru == 1 ]; then
     echo -e "\e[1;35mКонфигурация:\e[0m"
@@ -87,6 +86,8 @@ else
     echo ""
     echo -ne "Proceed? [y/n]: \e[1m"
 fi
+
+ans="n"
 read ans
 echo -ne "\e[0m"
 case $ans in
@@ -121,6 +122,7 @@ werror_flag=""
 case disable_werror in
     no)
         werror_flag="-Werror"
+        ;;
 esac
 
 cat makefile.raw | sed -e "s|\*\*\*SUBST_PREFIX\*\*\*|$prefix|g" \
