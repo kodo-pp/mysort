@@ -8,21 +8,24 @@ fi
 show_help()
 {
 	if [ $use_ruru == 1 ]; then
-		echo -e "\e[1;35mИспользование\e[0m: $0 [--help] [--prefix=ПРЕФИКС] [--progname=ИМЯ_ИСПОЛНЯЕМОГО_ФАЙЛА]"
+		echo -e "\e[1;35mИспользование\e[0m: $0 [--help] [--prefix=ПРЕФИКС] [--progname=ИМЯ_ИСПОЛНЯЕМОГО_ФАЙЛА] [--disable-werror]"
 		echo -e "    \e[1;34m--help\e[0m: показать эту справку"
 		echo -e "    \e[1;34m--prefix\e[0m=\e[1;36mПРЕФИКС\e[0m: выполнить установку в \e[1mПРЕФИКС\e[0m (по умолчанию: \e[1m'/usr/local'\e[0m)"
 		echo -e "    \e[1;34m--progname\e[0m=\e[1;36mИМЯ_ИСПОЛНЯЕМОГО_ФАЙЛА\e[0m: присвоить исполняемому файлу имя \e[1mИМЯ_ИСПОЛНЯЕМОГО_ФАЙЛА\e[0m (по умолчанию: \e[1m'mysort'\e[0m)"
+		echo -e "    \e[1;34m--disable-werror\e[0m: не использовать флаг компилятора \e[1m-Werror\e[0m"
 	else
 		echo -e "\e[1;35mUsage\e[0m: $0 [--help] [--prefix=PREFIX] [--progname=NAME]"
 		echo -e "    \e[1;34m--help\e[0m: show this help"
 		echo -e "    \e[1;34m--prefix\e[0m=\e[1;36mPREFIX\e[0m: install files to \e[1mPREFIX\e[0m (defaults to \e[1m'/usr/local'\e[0m)"
 		echo -e "    \e[1;34m--progname\e[0m=\e[1;36mNAME\e[0m: set the name of executable file to \e[1mNAME\e[0m (defaults to \e[1m'mysort'\e[0m)"
+		echo -e "    \e[1;34m--disable-werror\e[0m: do not use \e[1m-Werror\e[0m compiler flag"
 	fi
 	exit 0
 }
 
 prefix="/usr/local"
 progname="mysort"
+disable_werror="no"
 
 while ! [ -z "$1" ]; do
 	case $1 in
@@ -35,6 +38,9 @@ while ! [ -z "$1" ]; do
 			;;
 		--progname=*)
 			progname=`echo $1 | sed 's/^--progname\=//g'`
+			;;
+		--disable-werror)
+			disable_werror="yes"
 			;;
 		*)
 			if [ $use_ruru == 1 ]; then
@@ -56,12 +62,28 @@ if [ $use_ruru == 1 ]; then
 	echo -e "\e[1;35mКонфигурация:\e[0m"
 	echo -e "    Префикс: \e[1m'$prefix'\e[0m"
 	echo -e "    Имя исполняемого файла: \e[1m'$progname'\e[0m"
+	case $disable_werror in
+		yes)
+			echo -e "    Не использовать флаг компилятора \e[1m-Werror\e[0m"
+			;;
+		*)
+			echo -e "    Использовать флаг компилятора \e[1m-Werror\e[0m"
+			;;
+	esac
 	echo ""
 	echo -ne "Продолжить? [д/н]: \e[1m"
-else	
+else
 	echo -e "\e[1;35mConfiguration:\e[0m"
 	echo -e "    Prefix: \e[1m'$prefix'\e[0m"
 	echo -e "    Executable file name: \e[1m'$progname'\e[0m"
+	case $disable_werror in
+		yes)
+			echo -e "    Do not use \e[1m-Werror\e[0m compiler flag"
+			;;
+		*)
+			echo -e "    Use \e[1m-Werror\e[0m compiler flag"
+			;;
+	esac
 	echo ""
 	echo -ne "Proceed? [y/n]: \e[1m"
 fi
@@ -95,8 +117,15 @@ if ! [ -f makefile.raw ]; then
 	exit 2
 fi
 
+werror_flag=""
+case disable_werror in
+	no)
+		werror_flag="-Werror"
+esac
+
 cat makefile.raw | sed -e "s|\*\*\*SUBST_PREFIX\*\*\*|$prefix|g" \
                        -e "s|\*\*\*SUBST_PROGNAME\*\*\*|$progname|g" \
+					   -e "s|\*\*\*SUBST_WERROR_FLAG\*\*\*|$werror_flag|g" \
                        > Makefile
 
 if [ $use_ruru == 1 ]; then
@@ -104,4 +133,3 @@ if [ $use_ruru == 1 ]; then
 else
 	echo -e '\e[1;32mdone\e[0m'
 fi
-
