@@ -9,3 +9,4 @@ NORETURN void show_usage_and_exit(int exit_code)
     printf("Usage: %s [--help] [FILENAME]\n", opts.program_name);
     exit(exit_code);
 }
+

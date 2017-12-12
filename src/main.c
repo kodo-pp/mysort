@@ -29,15 +29,7 @@ int main(int argc, char **argv)
             sort_process();
             break;
         default:
-            printf("?????? %d\n", opts.output_type);
+            die("unknown output type (at main)");
             break;
     }
-
-    /*printf("Program name: %s\n", opts.program_name);
-    if (opts.input_file == NULL)
-    {
-        opts.input_file = "<NULL>";
-    }
-    printf("IT: %d, OT: %d, IF: %s, SC: %d\n", opts.input_type, opts.output_type, opts.input_file, opts.sort_comparison);*/
-
 }

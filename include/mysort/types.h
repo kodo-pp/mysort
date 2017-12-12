@@ -46,7 +46,6 @@ typedef enum _compare_t compare_t;
 
 typedef compare_t(*compfunc_t)(char*, char*);
 typedef void (* sortfunc_t)(char**, int, compfunc_t);
-//typedef void(*func)(int*,int*);
 
 typedef struct _options_t options_t;
 

@@ -30,10 +30,9 @@ compare_t cf_normal(char *first, char *second)
 
 compare_t cf_numeric(char *first, char *second)
 {
-    //printf("Hi\n");
     if (first == NULL || second == NULL)
     {
-        die ("argument in NULL (at cf_numeric)");
+        die ("argument is NULL (at cf_numeric)");
     }
     bool eqlennumflag = false;
     for (int i = 0; ; ++i)
@@ -86,7 +85,6 @@ compare_t cf_numeric(char *first, char *second)
 
 void sf_comb(char **data, int count, compfunc_t cmp)
 {
-    //printf(">>%d\n", count);
     if (data == NULL)
     {
         die("data == NULL (at sf_comb)");
@@ -97,10 +95,8 @@ void sf_comb(char **data, int count, compfunc_t cmp)
     {
         for (int j = 0; j + step < count; ++j)
         {
-            //printf(">>>%d\n", cmp(data[j], data[j+1]));
             if (cmp(data[j], data[j+step]) == CMP_MORE)
             {
-                //printf("    swap(data[%d{,+1}])\n", j);
                 char *tmp = data[j];
                 data[j] = data[j+step];
                 data[j+step] = tmp;
@@ -133,7 +129,6 @@ static compfunc_t get_comparator_func()
             break;
         case SC_NUMERIC:
             return cf_numeric;
-            //return cf_normal;
             break;
         default:
             return cf_normal;
@@ -165,11 +160,6 @@ static void write_data(char **strs, size_t count)
 
 void sort_process()
 {
-/*    char *buf;
-    size_t bufsize = read_data(&buf);
-    char **strs;
-    size_t count = get_strs(buf, bufsize, &strs);
-    free(buf);*/
     int count = 0;
     char **strs = NULL;
 
@@ -180,7 +170,6 @@ void sort_process()
         in = fopen("/dev/stdin", "r");
         if (in == NULL)
         {
-            //free(*buf);
             die("unable to open /dev/stdin (at read_data)");
         }
     }
@@ -189,7 +178,6 @@ void sort_process()
         in = fopen(opts.input_file, "r");
         if (in == NULL)
         {
-            //free(*buf);
             die("unable to open input file (at read_data)");
         }
     }
@@ -204,7 +192,6 @@ void sort_process()
         }
         strs[count-1] = malloc(65536);
         fgets(strs[count-1], 65536, in);
-//        printf("count = %d, str = '%s'\n", count, strs[count-1]);
         if (feof(in))
         {
             fclose(in);
@@ -214,7 +201,6 @@ void sort_process()
 
     compfunc_t compfunc = get_comparator_func();
     sortfunc_t sortfunc = get_sort_func();
-    //sort_data(strs, count, compfunc, sortfunc);
     sortfunc(strs, count, compfunc);
     write_data(strs, count);
     for (int i = 0; i < count; ++i)
@@ -223,3 +209,4 @@ void sort_process()
     }
     free(strs);
 }
+
