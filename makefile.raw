@@ -1,5 +1,4 @@
 PROGNAME=***SUBST_PROGNAME***
-PREFIX=***SUBST_PREFIX***
 WERROR_FLAG=***SUBST_WERROR_FLAG***
 
 OBJS = \
@@ -16,21 +15,18 @@ CC?=cc
 LDFLAGS?=
 CFLAGS=-std=c99 -Wall -Wextra -pedantic $(WERROR_FLAG) -Iinclude/
 
-.PHONY: all clean distclean install uninstall ee bee run
+.PHONY: all clean distclean ee bee run test
 
 all: $(PROGNAME)
 clean:
 	rm -vf $(PROGNAME) src/*.o
 distclean: clean
 	rm -vf Makefile
-install: $(PROGNAME) install.sh
-	./install.sh
-uninstall: uninstall.sh
-	./uninstall.sh
 
 $(PROGNAME): $(OBJS)
 	$(CC) $(OBJS) $(LDFLAGS) -o $(PROGNAME)
-
+test: tests/test.sh $(PROGNAME)
+	tests/test.sh "$(PROGNAME)"
 # Debug targets
 run: $(PROGNAME)
 	./$(PROGNAME)
