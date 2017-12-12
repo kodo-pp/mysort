@@ -4,6 +4,9 @@ WERROR_FLAG=***SUBST_WERROR_FLAG***
 
 OBJS = \
 src/main.o \
+src/args.o \
+src/usage.o \
+src/die.o \
 
 LIBS = \
 -lc -lm \

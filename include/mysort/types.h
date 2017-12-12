@@ -3,20 +3,33 @@
 
 #include <stdbool.h>
 
-#define __attribute__((noreturn)) NORETURN
+#define NORETURN __attribute__((noreturn))
 
 typedef char * string_t;
 
-#define IT_STDIN 1
-#define IT_FILE 2
+enum opt_input_type
+{
+    IT_STDIN = 1,
+    IT_FILE
+};
 
-#define OT_SORT 1
-#define OT_USAGE 2
+enum opt_output_type
+{
+    OT_SORT = 1,
+    OT_USAGE
+};
+
+enum opt_sort_comparison
+{
+    SC_NORMAL = 1,
+    SC_NUMERIC = 2
+};
 
 struct _options_t
 {
     int input_type;
     int output_type;
+    int sort_comparison;
     string_t program_name;
     string_t input_file;
     bool invalid_flag;

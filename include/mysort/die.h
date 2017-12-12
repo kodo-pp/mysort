@@ -3,6 +3,8 @@
 
 #include <mysort/types.h>
 
+#define DIE_EXIT_CODE 120
+
 NORETURN void die(string_t);
 
 #endif

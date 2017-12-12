@@ -1,5 +1,7 @@
 #include <mysort/args.h>
 #include <mysort/types.h>
+#include <mysort/die.h>
+#include <mysort/usage.h>
 #include <string.h>
 
 
@@ -9,11 +11,11 @@ void parse_args(int argc, char **argv)
 {
     if (argc <= 0)
     {
-        xdie("Internal error: argc <= 0")
+        die("Internal error: argc <= 0");
     }
 
     // args - глобальная структура
-    args.program_name = argv[0];
+    opts.program_name = argv[0];
 
     for (int i = 1; i < argc; ++i)
     {
@@ -22,5 +24,8 @@ void parse_args(int argc, char **argv)
             show_usage_and_exit(0);
         }
         else if (! strcmp(argv[i], "-n"))
+        {
+            opts.sort_comparison = SC_NUMERIC;
+        }
     }
 }
