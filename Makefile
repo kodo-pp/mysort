@@ -1,6 +1,6 @@
-PROGNAME=***SUBST_PROGNAME***
-PREFIX=***SUBST_PREFIX***
-WERROR_FLAG=***SUBST_WERROR_FLAG***
+PROGNAME=mysort
+PREFIX=/home/kodopp/mysort-install
+WERROR_FLAG=
 
 OBJS = \
 src/main.o \
@@ -10,7 +10,7 @@ LIBS = \
 
 CC?=cc
 LDFLAGS?=
-CFLAGS=-std=c99 -Wall -Wextra -pedantic $(WERROR_FLAG) -Iinclude/
+CFLAGS=-std=c99 -Wall -Wextra -pedantic $(WERROR_FLAG)
 
 .PHONY: all clean distclean install uninstall ee bee run
 
