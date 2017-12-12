@@ -164,7 +164,8 @@ void parse_args(int argc, char **argv)
         }
         else if (!any_opt)
         {
-            opts.input_file = argv[i];
+            opts.input_type = IT_FILE;
+            infile = argv[i];
         }
     }
     if (opts.input_type == IT_FILE)
