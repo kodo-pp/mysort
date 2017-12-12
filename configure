@@ -5,6 +5,19 @@ if locale | grep LC_MESSAGES | grep -iq 'ru'; then
     use_ruru=1
 fi
 
+machine_gen_message=""
+version_string="1.0 alpha"
+
+if [ $use_ruru == 1 ]; then
+    machine_gen_message="// Внимание: этот файл (include/config.h) был сгенерирован автоматически.
+// Не изменяйте его содержимое, оно будет перезаписано при последующей сборке.
+// Для изменения конфигурации используйте скрипт \`configure'"
+else
+    machine_gen_message="// Warning: this file (include/config.h) was machine-generated.
+// Do not change its content because it will be rewritten in the build process.
+// To change configuration, use \`configure' script"
+fi
+
 show_help()
 {
     if [ $use_ruru == 1 ]; then
@@ -119,9 +132,9 @@ if ! [ -f makefile.raw ]; then
 fi
 
 werror_flag=""
-case disable_werror in
+case $disable_werror in
     no)
-        werror_flag="-Werror"
+        werror_flag="-Werror -Wno-error=unused-variable"
         ;;
 esac
 
@@ -129,6 +142,27 @@ cat makefile.raw | sed -e "s|\*\*\*SUBST_PREFIX\*\*\*|$prefix|g" \
                        -e "s|\*\*\*SUBST_PROGNAME\*\*\*|$progname|g" \
                        -e "s|\*\*\*SUBST_WERROR_FLAG\*\*\*|$werror_flag|g" \
                        > Makefile
+
+if [ $use_ruru == 1 ]; then
+   echo -e '\e[1;32mготово\e[0m'
+else
+   echo -e '\e[1;32mdone\e[0m'
+fi
+if [ $use_ruru == 1 ]; then
+    echo -ne 'Создание \e[1minclude/mysort/config.h\e[0m… '
+else
+    echo -ne 'Generating \e[1minclude/mysort/config.h\e[0m… '
+fi
+
+echo "$machine_gen_message
+#ifndef MYSORT_CONFIG_H
+#define MYSORT_CONFIG_H
+" > include/mysort/config.h
+
+echo "#define VERSION_STRING \"$version_string\"
+" >> include/mysort/config.h
+
+echo "#endif" >> include/mysort/config.h
 
 if [ $use_ruru == 1 ]; then
     echo -e '\e[1;32mготово\e[0m'
