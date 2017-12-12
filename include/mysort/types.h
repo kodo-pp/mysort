@@ -36,6 +36,18 @@ struct _options_t
     bool invalid_flag;
 };
 
+enum _compare_t
+{
+    CMP_LESS = -1,
+    CMP_EQ = 0,
+    CMP_MORE = 1
+};
+typedef enum _compare_t compare_t;
+
+typedef compare_t(*compfunc_t)(char*, char*);
+typedef void (* sortfunc_t)(char**, int, compfunc_t);
+//typedef void(*func)(int*,int*);
+
 typedef struct _options_t options_t;
 
 #endif

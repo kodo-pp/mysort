@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <mysort/die.h>
 #include <mysort/args.h>
+#include <string.h>
 
 /*
 static size_t bufsize = 1024, bufdiff = bufsize;
@@ -87,7 +88,46 @@ static size_t get_strs(char *buf, size_t bufsize, char ***strs)
 }
 */
 
-/*
+compare_t cf_normal(char *first, char *second)
+{
+    compare_t cmp = (compare_t) strcmp(first, second);
+    if (cmp < 0)
+    {
+        return CMP_LESS;
+    }
+    else if (cmp == 0)
+    {
+        return CMP_EQ;
+    }
+    else
+    {
+        return CMP_MORE;
+    }
+}
+
+void sf_comb(char **data, int count, compfunc_t cmp)
+{
+    //printf(">>%d\n", count);
+    if (data == NULL)
+    {
+        die("data == NULL (at sf_comb)");
+    }
+    for (int i = 0; i < count; ++i)
+    {
+        for (int j = 0; j < count - 1; ++j)
+        {
+            //printf(">>>%d\n", cmp(data[j], data[j+1]));
+            if (cmp(data[j], data[j+1]) == CMP_MORE)
+            {
+                //printf("    swap(data[%d{,+1}])\n", j);
+                char *tmp = data[j];
+                data[j] = data[j+1];
+                data[j+1] = tmp;
+            }
+        }
+    }
+}
+
 static compfunc_t get_comparator_func()
 {
     switch (opts.sort_comparison)
@@ -99,13 +139,16 @@ static compfunc_t get_comparator_func()
             //return cf_numeric;
             return cf_normal;
             break;
+        default:
+            return cf_normal;
+            break;
     }
 }
 
 static sortfunc_t get_sort_func()
 {
     return sf_comb;
-}*/
+}
 
 static void write_data(char **strs, size_t count)
 {
@@ -173,9 +216,10 @@ void sort_process()
         }
     }
 
-    //compfunc_t compfunc = get_comparator_func();
-    //sortfunc_t sortfunc = get_sort_func();
+    compfunc_t compfunc = get_comparator_func();
+    sortfunc_t sortfunc = get_sort_func();
     //sort_data(strs, count, compfunc, sortfunc);
+    sortfunc(strs, count, compfunc);
     write_data(strs, count);
     for (int i = 0; i < count; ++i)
     {
