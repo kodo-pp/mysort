@@ -30,4 +30,4 @@ echo "Total tests: $num_tests"
 echo "Failed tests: $failed_tests"
 echo "Passed tests: $[$num_tests - $failed_tests]"
 
-return $failed_tests
+exit $failed_tests

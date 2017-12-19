@@ -15,7 +15,7 @@ CC?=cc
 LDFLAGS?=
 CFLAGS=-std=c99 -Wall -Wextra -pedantic $(WERROR_FLAG) -Iinclude/
 
-.PHONY: all clean distclean ee bee run test
+.PHONY: all clean distclean ee bee run check
 
 all: $(PROGNAME)
 clean:
@@ -25,8 +25,8 @@ distclean: clean
 
 $(PROGNAME): $(OBJS)
 	$(CC) $(OBJS) $(LDFLAGS) -o $(PROGNAME)
-test: test.sh $(PROGNAME)
-	test.sh "$(PROGNAME)"
+check: test.sh $(PROGNAME)
+	./test.sh "$(PROGNAME)"
 # Debug targets
 run: $(PROGNAME)
 	./$(PROGNAME)
