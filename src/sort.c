@@ -102,7 +102,7 @@ void sf_comb(char **data, int count, compfunc_t cmp)
                 data[j+step] = tmp;
             }
         }
-        step /= 1.2;
+        step /= 1.2473309;
     }
 
     bool is_sorted = false;
@@ -209,4 +209,3 @@ void sort_process()
     }
     free(strs);
 }
-
