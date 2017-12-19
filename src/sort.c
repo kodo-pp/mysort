@@ -1,124 +1,13 @@
 #include <mysort/sort.h>
 #include <mysort/types.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <mysort/die.h>
 #include <mysort/args.h>
+#include <mysort/compare_funcs.h>
+#include <mysort/sort_funcs.h>
 #include <string.h>
 #include <ctype.h>
-
-compare_t cf_normal(char *first, char *second)
-{
-    if (first == NULL || second == NULL)
-    {
-        die ("argument in NULL (at cf_normal)");
-    }
-    compare_t cmp = (compare_t) strcmp(first, second);
-    if (cmp < 0)
-    {
-        return CMP_LESS;
-    }
-    else if (cmp == 0)
-    {
-        return CMP_EQ;
-    }
-    else
-    {
-        return CMP_MORE;
-    }
-}
-
-compare_t cf_numeric(char *first, char *second)
-{
-    if (first == NULL || second == NULL)
-    {
-        die ("argument is NULL (at cf_numeric)");
-    }
-    bool eqlennumflag = false;
-    for (int i = 0; ; ++i)
-    {
-
-        if (isdigit(first[i]) && isdigit(second[i]) && !eqlennumflag)
-        {
-            int j1 = i;
-            int j2 = i;
-            while (first[j1] != '\0' && isdigit(first[j1]))
-            {
-                ++j1;
-            }
-            while (second[j2] != '\0' && isdigit(second[j2]))
-            {
-                ++j2;
-            }
-            if (j1 < j2)
-            {
-                return CMP_LESS;
-            }
-            else if (j1 > j2)
-            {
-                return CMP_MORE;
-            }
-            else
-            {
-                eqlennumflag = true;
-            }
-        }
-        if (first[i] == '\0' && second[i] == '\0')
-        {
-            return CMP_EQ;
-        }
-        else if (first[i] < second[i])
-        {
-            return CMP_LESS;
-        }
-        else if (first[i] > second[i])
-        {
-            return CMP_MORE;
-        }
-        if (!isdigit(first[i]))
-        {
-            eqlennumflag = false;
-        }
-    }
-
-}
-
-void sf_comb(char **data, int count, compfunc_t cmp)
-{
-    if (data == NULL)
-    {
-        die("data == NULL (at sf_comb)");
-    }
-
-    int step = count - 1;
-    while (step > 0)
-    {
-        for (int j = 0; j + step < count; ++j)
-        {
-            if (cmp(data[j], data[j+step]) == CMP_MORE)
-            {
-                char *tmp = data[j];
-                data[j] = data[j+step];
-                data[j+step] = tmp;
-            }
-        }
-        step /= 1.2473309;
-    }
-
-    bool is_sorted = false;
-    while (!is_sorted)
-    {
-        is_sorted = true;
-        for (int j = 0; j < count - 1; ++j)
-        if (cmp(data[j], data[j+1]) == CMP_MORE)
-        {
-            is_sorted = false;
-            char *tmp = data[j];
-            data[j] = data[j+1];
-            data[j+1] = tmp;
-        }
-    }
-}
+#include <stdlib.h>
+#include <stdio.h>
 
 static compfunc_t get_comparator_func()
 {

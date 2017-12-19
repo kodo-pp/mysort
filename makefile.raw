@@ -7,6 +7,8 @@ src/args.o \
 src/usage.o \
 src/die.o \
 src/sort.o \
+src/compare_funcs.o \
+src/sort_funcs.o \
 
 LIBS = \
 -lc -lm \
