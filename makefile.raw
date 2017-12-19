@@ -19,14 +19,14 @@ CFLAGS=-std=c99 -Wall -Wextra -pedantic $(WERROR_FLAG) -Iinclude/
 
 all: $(PROGNAME)
 clean:
-	rm -vf $(PROGNAME) src/*.o
+	rm -vf $(PROGNAME) src/*.o tests/*.out
 distclean: clean
 	rm -vf Makefile
 
 $(PROGNAME): $(OBJS)
 	$(CC) $(OBJS) $(LDFLAGS) -o $(PROGNAME)
-test: tests/test.sh $(PROGNAME)
-	tests/test.sh "$(PROGNAME)"
+test: test.sh $(PROGNAME)
+	test.sh "$(PROGNAME)"
 # Debug targets
 run: $(PROGNAME)
 	./$(PROGNAME)
