@@ -27,6 +27,7 @@ struct _options_t {
     int input_type;
     int output_type;
     int sort_comparison;
+    bool reversed_sort;
     string_t program_name;
     string_t input_file;
     bool invalid_flag;
@@ -39,7 +40,7 @@ enum _compare_t {
 };
 typedef enum _compare_t compare_t;
 
-typedef compare_t(*compfunc_t)(char*, char*);
+typedef compare_t (* compfunc_t)(const char*, const char*);
 typedef void (* sortfunc_t)(char**, int, compfunc_t);
 
 typedef struct _options_t options_t;

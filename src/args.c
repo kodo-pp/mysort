@@ -96,6 +96,41 @@ void parse_args(int argc, char **argv) {
             opts.sort_comparison = SC_NUMERIC;
             continue;
         }
+
+        result = get_opt(argv[i], "-r");
+        if (result != OPTTP_UNK) {
+            any_opt = true;
+        }
+        if (result == OPTTP_SKIP) {
+            continue;
+        }
+        if (result == OPTTP_FILE) {
+            opts.input_type = IT_FILE;
+            infile = argv[i];
+            continue;
+        }
+        if (result == OPTTP_OPT) {
+            opts.reversed_sort = true;
+            continue;
+        }
+
+        result = get_opt(argv[i], "--reverse");
+        if (result != OPTTP_UNK) {
+            any_opt = true;
+        }
+        if (result == OPTTP_SKIP) {
+            continue;
+        }
+        if (result == OPTTP_FILE) {
+            opts.input_type = IT_FILE;
+            infile = argv[i];
+            continue;
+        }
+        if (result == OPTTP_OPT) {
+            opts.reversed_sort = true;
+            continue;
+        }
+
         result = get_opt(argv[i], "-v");
         if (result != OPTTP_UNK) {
             any_opt = true;

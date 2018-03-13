@@ -12,7 +12,7 @@
 static compfunc_t get_comparator_func() {
     switch (opts.sort_comparison) {
     case SC_NORMAL:
-        return cf_normal;
+        return /*opts.reversed_sort ?*/ cf_normal;
         break;
     case SC_NUMERIC:
         return cf_numeric;

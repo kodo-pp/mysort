@@ -6,8 +6,11 @@
 #include <stdlib.h>
 #include <mysort/config.h>
 #include <mysort/sort.h>
+#include <string.h>
 
 int main(int argc, char **argv) {
+    memset(&opts, 0, sizeof(opts));
+
     parse_args(argc, argv);
     if (opts.invalid_flag) {
         show_usage_and_exit(1);

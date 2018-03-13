@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-compare_t cf_normal(char *first, char *second) {
+compare_t cf_normal(const char *first, const char *second) {
     if (first == NULL || second == NULL) {
         die ("argument is NULL (at cf_normal)");
     }
@@ -19,7 +19,7 @@ compare_t cf_normal(char *first, char *second) {
     }
 }
 
-compare_t cf_numeric(char *first, char *second) {
+compare_t cf_numeric(const char *first, const char *second) {
     if (first == NULL || second == NULL) {
         die ("argument is NULL (at cf_numeric)");
     }
@@ -67,16 +67,12 @@ compare_t cf_reverse_numeric(const char *first, const char *second) {
     return reverse_compare(cf_numeric(first, second));
 }
 
-compfunc_t get_reverse_cf(compare_t cf) {
-    switch (cf) {
-    case cf_normal:
+compfunc_t get_reverse_cf(compfunc_t cf) {
+    if (cf == cf_normal) {
         return cf_reverse_normal;
-        break;
-    case cf_numeric:
+    } else if (cf == cf_numeric) {
         return cf_reverse_numeric;
-        break;
-    default:
-        return cf_reverse_numeric;
-        break;
+    } else {
+        return cf_reverse_normal;
     }
 }
