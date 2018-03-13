@@ -1,0 +1,25 @@
+dr-xr-xr-x  13 root root     0 Dec 13 00:01 sys
+dr-xr-xr-x 227 root root     0 Dec 12 16:28 proc
+drwx------   2 root root 16384 Dec  8 19:13 lost+found
+drwx------   5 root root  4096 Dec  8 20:38 root
+drwxr-xr-x   2 root root  4096 Dec  8 19:16 cdrom
+drwxr-xr-x   2 root root  4096 Dec  8 19:19 bin
+drwxr-xr-x   2 root root  4096 Dec 10 00:13 lib32
+drwxr-xr-x   2 root root  4096 Nov 24 16:59 mnt
+drwxr-xr-x   2 root root  4096 Nov 24 16:59 opt
+drwxr-xr-x   2 root root  4096 Nov 24 16:59 srv
+drwxr-xr-x   2 root root  4096 Nov 24 17:04 lib64
+drwxr-xr-x   2 root root 12288 Dec 10 00:13 sbin
+drwxr-xr-x   3 root root  4096 Dec  8 19:16 home
+drwxr-xr-x   3 root root  4096 Dec 10 00:14 boot
+drwxr-xr-x   5 root root  4096 Dec  8 23:41 media
+drwxr-xr-x  11 root root  4096 Dec 10 00:13 usr
+drwxr-xr-x  13 root root  4096 Dec 10 23:35 var
+drwxr-xr-x  21 root root  4540 Dec 12 19:12 dev
+drwxr-xr-x  27 root root  4096 Dec 10 00:13 lib
+drwxr-xr-x  36 root root  1200 Dec 12 20:18 run
+drwxr-xr-x 154 root root 12288 Dec 12 18:39 etc
+drwxrwxrwt  20 root root  4096 Dec 13 01:04 tmp
+lrwxrwxrwx   1 root root    30 Dec  8 19:18 vmlinuz -> boot/vmlinuz-4.10.0-38-generic
+lrwxrwxrwx   1 root root    33 Dec  8 19:18 initrd.img -> boot/initrd.img-4.10.0-38-generic
+total 100
