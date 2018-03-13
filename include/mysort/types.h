@@ -7,27 +7,23 @@
 
 typedef char * string_t;
 
-enum opt_input_type
-{
+enum opt_input_type {
     IT_STDIN = 1,
     IT_FILE
 };
 
-enum opt_output_type
-{
+enum opt_output_type {
     OT_SORT = 1,
     OT_USAGE,
     OT_VERSION
 };
 
-enum opt_sort_comparison
-{
+enum opt_sort_comparison {
     SC_NORMAL = 1,
     SC_NUMERIC = 2
 };
 
-struct _options_t
-{
+struct _options_t {
     int input_type;
     int output_type;
     int sort_comparison;
@@ -36,8 +32,7 @@ struct _options_t
     bool invalid_flag;
 };
 
-enum _compare_t
-{
+enum _compare_t {
     CMP_LESS = -1,
     CMP_EQ = 0,
     CMP_MORE = 1
