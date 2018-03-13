@@ -42,6 +42,7 @@ static void write_data(char **strs, size_t count) {
 
 void sort_process() {
     int count = 0;
+    int capacity = 0;
     char **strs = NULL;
 
     FILE *in;
@@ -60,7 +61,13 @@ void sort_process() {
 
     while (true) {
         ++count;
-        strs = realloc(strs, count * sizeof(char*));
+        if (strs == NULL || count > capacity) {
+            capacity *= 2;
+            if (count > capacity) {
+                capacity = count;
+            }
+            strs = realloc(strs, capacity * sizeof(char*));
+        }
         if (strs == NULL) {
             die("memory allocation error");
         }
