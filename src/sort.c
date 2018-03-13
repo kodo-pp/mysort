@@ -87,7 +87,7 @@ void sort_process() {
 
     compfunc_t compfunc = get_comparator_func();
     sortfunc_t sortfunc = get_sort_func();
-    sortfunc(strs, count, compfunc);
+    sortfunc((const char**)strs, count, compfunc);
     write_data(strs, count);
     for (int i = 0; i < count; ++i) {
         free(strs[i]);

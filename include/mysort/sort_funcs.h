@@ -3,6 +3,7 @@
 
 #include <mysort/types.h>
 
-void sf_comb(char **, int, compfunc_t);
+void sf_comb(const char **, int, compfunc_t);
+void sf_insertion(const char **, int, compfunc_t);
 
 #endif
