@@ -12,13 +12,13 @@
 static compfunc_t get_comparator_func() {
     switch (opts.sort_comparison) {
     case SC_NORMAL:
-        return /*opts.reversed_sort ?*/ cf_normal;
+        return opts.reversed_sort ? get_reverse_cf(cf_normal) : cf_normal;
         break;
     case SC_NUMERIC:
-        return cf_numeric;
+        return opts.reversed_sort ? get_reverse_cf(cf_numeric) : cf_numeric;
         break;
     default:
-        return cf_normal;
+        return opts.reversed_sort ? get_reverse_cf(cf_normal) : cf_normal;
         break;
     }
 }
