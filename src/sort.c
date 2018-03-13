@@ -71,8 +71,14 @@ void sort_process() {
         if (strs == NULL) {
             die("memory allocation error");
         }
+        /*
         strs[count-1] = malloc(65536);
         fgets(strs[count-1], 65536, in);
+        */
+
+        size_t length = 0;
+        getline(&strs[count-1], &length, in);
+
         if (feof(in)) {
             fclose(in);
             break;

@@ -13,9 +13,9 @@ src/sort_funcs.o \
 LIBS = \
 -lc -lm \
 
-CC?=cc
+CC=cc
 LDFLAGS?=
-CFLAGS=-std=c99 -Wall -Wextra -pedantic $(WERROR_FLAG) -Iinclude/
+CFLAGS=-std=gnu99 -Wall -Wextra -pedantic $(WERROR_FLAG) -Iinclude/
 
 .PHONY: all clean distclean ee bee run check
 
