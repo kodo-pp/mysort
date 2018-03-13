@@ -54,5 +54,29 @@ compare_t cf_numeric(char *first, char *second) {
             eqlennumflag = false;
         }
     }
+}
 
+compare_t reverse_compare(compare_t cmp) {
+    return -cmp;
+}
+
+compare_t cf_reverse_normal(const char *first, const char *second) {
+    return reverse_compare(cf_normal(first, second));
+}
+compare_t cf_reverse_numeric(const char *first, const char *second) {
+    return reverse_compare(cf_numeric(first, second));
+}
+
+compfunc_t get_reverse_cf(compare_t cf) {
+    switch (cf) {
+    case cf_normal:
+        return cf_reverse_normal;
+        break;
+    case cf_numeric:
+        return cf_reverse_numeric;
+        break;
+    default:
+        return cf_reverse_numeric;
+        break;
+    }
 }
