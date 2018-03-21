@@ -66,7 +66,12 @@ for i in test*; do
 
     options="`cat options.txt 2>/dev/null`"
     input="input.txt"
-    real_output="output.txt"
+
+    if [ -f "config-output-file.txt" ]; then
+        real_output="`cat config-output-file.txt`"
+    else
+        real_output="output.txt"
+    fi
     real_stderr="stderr.txt"
     ground_truth_output="gt-output.txt"
 
