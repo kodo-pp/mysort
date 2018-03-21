@@ -45,20 +45,24 @@ void parse_args(int argc, char **argv) {
 
     for (int i = 1; i < argc; ++i) {
         bool any_opt = false;
+        //bool // any_known = false;
         int result;
         result = get_opt(argv[i], "--help");
         if (result != OPTTP_UNK) {
             any_opt = true;
         }
         if (result == OPTTP_SKIP) {
+            // any_known = true;
             continue;
         }
         if (result == OPTTP_FILE) {
+            // any_known = true;
             opts.input_type = IT_FILE;
             infile = argv[i];
             continue;
         }
         if (result == OPTTP_OPT) {
+            // any_known = true;
             opts.output_type = OT_USAGE;
             continue;
         }
@@ -68,14 +72,17 @@ void parse_args(int argc, char **argv) {
             any_opt = true;
         }
         if (result == OPTTP_SKIP) {
+            // any_known = true;
             continue;
         }
         if (result == OPTTP_FILE) {
+            // any_known = true;
             opts.input_type = IT_FILE;
             infile = argv[i];
             continue;
         }
         if (result == OPTTP_OPT) {
+            // any_known = true;
             opts.sort_comparison = SC_NUMERIC;
             continue;
         }
@@ -85,14 +92,17 @@ void parse_args(int argc, char **argv) {
             any_opt = true;
         }
         if (result == OPTTP_SKIP) {
+            // any_known = true;
             continue;
         }
         if (result == OPTTP_FILE) {
+            // any_known = true;
             opts.input_type = IT_FILE;
             infile = argv[i];
             continue;
         }
         if (result == OPTTP_OPT) {
+            // any_known = true;
             opts.sort_comparison = SC_NUMERIC;
             continue;
         }
@@ -102,14 +112,17 @@ void parse_args(int argc, char **argv) {
             any_opt = true;
         }
         if (result == OPTTP_SKIP) {
+            // any_known = true;
             continue;
         }
         if (result == OPTTP_FILE) {
+            // any_known = true;
             opts.input_type = IT_FILE;
             infile = argv[i];
             continue;
         }
         if (result == OPTTP_OPT) {
+            // any_known = true;
             opts.reversed_sort = true;
             continue;
         }
@@ -119,14 +132,17 @@ void parse_args(int argc, char **argv) {
             any_opt = true;
         }
         if (result == OPTTP_SKIP) {
+            // any_known = true;
             continue;
         }
         if (result == OPTTP_FILE) {
+            // any_known = true;
             opts.input_type = IT_FILE;
             infile = argv[i];
             continue;
         }
         if (result == OPTTP_OPT) {
+            // any_known = true;
             opts.reversed_sort = true;
             continue;
         }
@@ -136,14 +152,17 @@ void parse_args(int argc, char **argv) {
             any_opt = true;
         }
         if (result == OPTTP_SKIP) {
+            // any_known = true;
             continue;
         }
         if (result == OPTTP_FILE) {
+            // any_known = true;
             opts.input_type = IT_FILE;
             infile = argv[i];
             continue;
         }
         if (result == OPTTP_OPT) {
+            // any_known = true;
             opts.output_type = OT_VERSION;
             continue;
         }
@@ -152,14 +171,17 @@ void parse_args(int argc, char **argv) {
             any_opt = true;
         }
         if (result == OPTTP_SKIP) {
+            // any_known = true;
             continue;
         }
         if (result == OPTTP_FILE) {
+            // any_known = true;
             opts.input_type = IT_FILE;
             infile = argv[i];
             continue;
         }
         if (result == OPTTP_OPT) {
+            // any_known = true;
             opts.output_type = OT_VERSION;
             continue;
         }

@@ -5,7 +5,6 @@
 #include <mysort/args.h>
 
 NORETURN void show_usage_and_exit(int exit_code) {
-    printf("Usage: %s [--help] [FILENAME]\n", opts.program_name);
+    fprintf(stderr, "Usage: %s [--help] [FILENAME]\n", opts.program_name);
     exit(exit_code);
 }
-
