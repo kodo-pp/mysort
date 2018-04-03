@@ -4,6 +4,7 @@
 #include <mysort/args.h>
 #include <mysort/compare_funcs.h>
 #include <mysort/sort_funcs.h>
+#include <mysort/vec.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -40,57 +41,77 @@ static void write_data(char **strs, size_t count) {
     }
 }
 
-void sort_process() {
-    int count = 0;
-    int capacity = 0;
-    char **strs = NULL;
+static struct vec *read_input_files() {
+    struct vec *strs = malloc(sizeof (struct vec));
+    if (!strs) {
+        die("malloc() failed (at read_input_files())");
+    }
+    make_vec(strs);
 
     FILE *in;
 
     if (opts.input_type == IT_STDIN) {
-        in = fopen("/dev/stdin", "r");
-        if (in == NULL) {
-            die("unable to open /dev/stdin (at read_data)");
+        char *tmp = malloc(100 * sizeof(char));
+        if (!tmp) {
+            die("tmp allocation failed");
         }
+        strncpy(tmp, "/dev/stdin", 99);
+        fprintf(stderr, "Appending '%s'\n", tmp);
+        if (vec_append(&opts.input_files, tmp) != VEC_OK) {
+            die("unable to append '/dev/stdin' to input files list");
+        }
+        //in = fopen("/dev/stdin", "r");
+        //if (in == NULL) {
+        //    die("unable to open /dev/stdin (at read_data)");
+        //}
+    /*
     } else {
         in = fopen(opts.input_file, "r");
         if (in == NULL) {
             die("unable to open input file (at read_data)");
         }
+    }*/
     }
-
-    while (true) {
-        ++count;
-        if (strs == NULL || count > capacity) {
-            capacity *= 2;
-            if (count > capacity) {
-                capacity = count;
+    for (size_t i = 0; i < opts.input_files.length; ++i) {
+        fprintf(stderr, "i = %d, len = %d\n", (int)i, (int)strs->length);
+        in = fopen(vec_get(&opts.input_files, i), "r");
+        if (!in) {
+            fprintf(stderr, "AAA '%s'\n", vec_get(&opts.input_files, i));
+            die("Unable to open file");
+        }
+        while (true) {
+            char *tmp = NULL;
+            size_t length = 0;
+            getline(&tmp, &length, in);
+            if (!tmp) {
+                die("getline() failed");
             }
-            strs = realloc(strs, capacity * sizeof(char*));
-        }
-        if (strs == NULL) {
-            die("memory allocation error");
-        }
-        /*
-        strs[count-1] = malloc(65536);
-        fgets(strs[count-1], 65536, in);
-        */
 
-        size_t length = 0;
-        getline(&strs[count-1], &length, in);
+            if (vec_append(strs, tmp) != VEC_OK) {
+                die("unable to add input string");
+            }
 
-        if (feof(in)) {
-            fclose(in);
-            break;
+            //free(tmp);
+
+            if (feof(in)) {
+                fclose(in);
+                break;
+            }
         }
     }
+    return strs;
+}
+
+void sort_process() {
+    struct vec *v = read_input_files();
+    char **strs = v->data;
 
     compfunc_t compfunc = get_comparator_func();
     sortfunc_t sortfunc = get_sort_func();
-    sortfunc((const char**)strs, count, compfunc);
-    write_data(strs, count);
-    for (int i = 0; i < count; ++i) {
+    sortfunc((const char**)strs, v->length, compfunc);
+    write_data(strs, v->length);
+    for (size_t i = 0; i < v->length; ++i) {
         free(strs[i]);
     }
-    free(strs);
+    //free(strs);
 }

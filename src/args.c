@@ -197,7 +197,17 @@ void parse_args(int argc, char **argv) {
         if (infile == NULL) {
             show_usage_and_exit(1);
         } else {
-            opts.input_file = infile;
+            /* opts.input_file = infile; */
+            char *tmp = malloc(sizeof (char) * (strlen(infile + 1)));
+            if (!tmp) {
+                die("tmp alloc failed");
+            }
+            strcpy(tmp, infile);
+            int res = vec_append(&opts.input_files, tmp);
+            fprintf(stderr, "Appending '%s'\n", tmp);
+            if (res != VEC_OK) {
+                die("Unable to add entry to the input files list");
+            }
         }
     }
 }

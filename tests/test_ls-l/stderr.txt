@@ -1,0 +1,89 @@
+Appending '/dev/stdin'
+GOING TO REALLOC TO 1
+SDJJSD '/dev/stdin' 0
+SDJ 1
+i = 0, len = 0
+VEC_GET: '/dev/stdin'
+GOING TO REALLOC TO 1
+SDJJSD 'drwx------   2 root root 16384 Dec  8 19:13 lost+found
+' 0
+SDJ 1
+GOING TO REALLOC TO 2
+SDJJSD 'lrwxrwxrwx   1 root root    33 Dec  8 19:18 initrd.img -> boot/initrd.img-4.10.0-38-generic
+' 1
+SDJ 2
+GOING TO REALLOC TO 4
+SDJJSD 'drwxr-xr-x  36 root root  1200 Dec 12 20:18 run
+' 2
+SDJ 3
+SDJJSD 'drwxr-xr-x  27 root root  4096 Dec 10 00:13 lib
+' 3
+SDJ 4
+GOING TO REALLOC TO 8
+SDJJSD 'drwxr-xr-x   3 root root  4096 Dec 10 00:14 boot
+' 4
+SDJ 5
+SDJJSD 'drwxr-xr-x  11 root root  4096 Dec 10 00:13 usr
+' 5
+SDJ 6
+SDJJSD 'drwxr-xr-x   2 root root  4096 Dec  8 19:16 cdrom
+' 6
+SDJ 7
+SDJJSD 'drwxr-xr-x   2 root root  4096 Nov 24 16:59 srv
+' 7
+SDJ 8
+GOING TO REALLOC TO 16
+SDJJSD 'drwxr-xr-x   2 root root  4096 Nov 24 16:59 opt
+' 8
+SDJ 9
+SDJJSD 'drwx------   5 root root  4096 Dec  8 20:38 root
+' 9
+SDJ 10
+SDJJSD 'drwxr-xr-x   5 root root  4096 Dec  8 23:41 media
+' 10
+SDJ 11
+SDJJSD 'drwxr-xr-x   2 root root  4096 Nov 24 17:04 lib64
+' 11
+SDJ 12
+SDJJSD 'drwxr-xr-x   2 root root 12288 Dec 10 00:13 sbin
+' 12
+SDJ 13
+SDJJSD 'drwxr-xr-x   2 root root  4096 Dec 10 00:13 lib32
+' 13
+SDJ 14
+SDJJSD 'drwxrwxrwt  20 root root  4096 Dec 13 01:04 tmp
+' 14
+SDJ 15
+SDJJSD 'drwxr-xr-x   2 root root  4096 Dec  8 19:19 bin
+' 15
+SDJ 16
+GOING TO REALLOC TO 32
+SDJJSD 'lrwxrwxrwx   1 root root    30 Dec  8 19:18 vmlinuz -> boot/vmlinuz-4.10.0-38-generic
+' 16
+SDJ 17
+SDJJSD 'drwxr-xr-x  21 root root  4540 Dec 12 19:12 dev
+' 17
+SDJ 18
+SDJJSD 'dr-xr-xr-x 227 root root     0 Dec 12 16:28 proc
+' 18
+SDJ 19
+SDJJSD 'total 100
+' 19
+SDJ 20
+SDJJSD 'dr-xr-xr-x  13 root root     0 Dec 13 00:01 sys
+' 20
+SDJ 21
+SDJJSD 'drwxr-xr-x  13 root root  4096 Dec 10 23:35 var
+' 21
+SDJ 22
+SDJJSD 'drwxr-xr-x 154 root root 12288 Dec 12 18:39 etc
+' 22
+SDJ 23
+SDJJSD 'drwxr-xr-x   3 root root  4096 Dec  8 19:16 home
+' 23
+SDJ 24
+SDJJSD 'drwxr-xr-x   2 root root  4096 Nov 24 16:59 mnt
+' 24
+SDJ 25
+SDJJSD '' 25
+SDJ 26

@@ -10,6 +10,7 @@
 
 int main(int argc, char **argv) {
     memset(&opts, 0, sizeof(opts));
+    make_vec(&opts.input_files);
 
     parse_args(argc, argv);
     if (opts.invalid_flag) {

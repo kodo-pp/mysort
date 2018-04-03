@@ -2,6 +2,7 @@
 #define MYSORT_TYPES_H
 
 #include <stdbool.h>
+#include <mysort/vec.h>
 
 #define NORETURN __attribute__((noreturn))
 
@@ -29,7 +30,8 @@ struct _options_t {
     int sort_comparison;
     bool reversed_sort;
     string_t program_name;
-    string_t input_file;
+    /* string_t input_file; */
+    struct vec input_files;
     bool invalid_flag;
 };
 
