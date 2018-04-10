@@ -7,8 +7,10 @@
 #include <mysort/config.h>
 #include <mysort/sort.h>
 #include <string.h>
+#include <time.h>
 
 int main(int argc, char **argv) {
+    srand(time(NULL));
     memset(&opts, 0, sizeof(opts));
 
     parse_args(argc, argv);

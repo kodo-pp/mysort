@@ -21,7 +21,8 @@ enum opt_output_type {
 
 enum opt_sort_comparison {
     SC_NORMAL = 1,
-    SC_NUMERIC = 2
+    SC_NUMERIC = 2,
+    SC_RANDOM = 3
 };
 
 struct _options_t {
@@ -32,6 +33,7 @@ struct _options_t {
     string_t program_name;
     string_t input_files[MAX_INPUT_FILES + 1];
     bool invalid_flag;
+    bool strict;
 };
 
 enum _compare_t {

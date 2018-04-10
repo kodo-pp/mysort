@@ -56,6 +56,17 @@ compare_t cf_numeric(const char *first, const char *second) {
     }
 }
 
+compare_t cf_random(const char *first, const char *second) {
+    if (first == NULL || second == NULL) {
+        die ("argument is NULL (at cf_numeric)");
+    }
+    if (strcmp(first, second) == 0) {
+        return CMP_EQ;
+    } else {
+        return (rand() & (1 << 4)) ? CMP_LESS : CMP_MORE;
+    }
+}
+
 compare_t reverse_compare(compare_t cmp) {
     return -cmp;
 }
@@ -66,12 +77,17 @@ compare_t cf_reverse_normal(const char *first, const char *second) {
 compare_t cf_reverse_numeric(const char *first, const char *second) {
     return reverse_compare(cf_numeric(first, second));
 }
+compare_t cf_reverse_random(const char *first, const char *second) {
+    return reverse_compare(cf_random(first, second));
+}
 
 compfunc_t get_reverse_cf(compfunc_t cf) {
     if (cf == cf_normal) {
         return cf_reverse_normal;
     } else if (cf == cf_numeric) {
         return cf_reverse_numeric;
+    } else if (cf == cf_random) {
+        return cf_reverse_random;
     } else {
         return cf_reverse_normal;
     }

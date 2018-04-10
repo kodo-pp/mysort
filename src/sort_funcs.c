@@ -1,5 +1,6 @@
 #include <mysort/sort_funcs.h>
 #include <mysort/die.h>
+#include <mysort/args.h>
 #include <stdlib.h>
 
 void sf_comb(const char **data, int count, compfunc_t cmp) {
@@ -19,15 +20,17 @@ void sf_comb(const char **data, int count, compfunc_t cmp) {
         step /= 1.2473309;
     }
 
-    bool is_sorted = false;
-    while (!is_sorted) {
-        is_sorted = true;
-        for (int j = 0; j < count - 1; ++j) {
-            if (cmp(data[j], data[j+1]) == CMP_MORE) {
-                is_sorted = false;
-                const char *tmp = data[j];
-                data[j] = data[j+1];
-                data[j+1] = tmp;
+    if (opts.strict) {
+        bool is_sorted = false;
+        while (!is_sorted) {
+            is_sorted = true;
+            for (int j = 0; j < count - 1; ++j) {
+                if (cmp(data[j], data[j+1]) == CMP_MORE) {
+                    is_sorted = false;
+                    const char *tmp = data[j];
+                    data[j] = data[j+1];
+                    data[j+1] = tmp;
+                }
             }
         }
     }

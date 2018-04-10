@@ -51,6 +51,7 @@ void parse_args(int argc, char **argv) {
     opts.sort_comparison = SC_NORMAL;
     opts.input_type = IT_STDIN;
     opts.output_type = OT_SORT;
+    opts.strict = true;
     memset(opts.input_files, 0, sizeof(opts.input_files));
 
     string_t infile = NULL;
@@ -98,6 +99,48 @@ void parse_args(int argc, char **argv) {
         if (result == OPTTP_OPT) {
             // any_known = true;
             opts.sort_comparison = SC_NUMERIC;
+            continue;
+        }
+
+        result = get_opt(argv[i], "-R");
+        if (result != OPTTP_UNK) {
+            any_opt = true;
+        }
+        if (result == OPTTP_SKIP) {
+            // any_known = true;
+            continue;
+        }
+        if (result == OPTTP_FILE) {
+            // any_known = true;
+            opts.input_type = IT_FILE;
+            /* infile = argv[i]; */ add_file(argv[i]);
+            continue;
+        }
+        if (result == OPTTP_OPT) {
+            // any_known = true;
+            opts.sort_comparison = SC_RANDOM;
+            opts.strict = false;
+            continue;
+        }
+
+        result = get_opt(argv[i], "--random-sort");
+        if (result != OPTTP_UNK) {
+            any_opt = true;
+        }
+        if (result == OPTTP_SKIP) {
+            // any_known = true;
+            continue;
+        }
+        if (result == OPTTP_FILE) {
+            // any_known = true;
+            opts.input_type = IT_FILE;
+            /* infile = argv[i]; */ add_file(argv[i]);
+            continue;
+        }
+        if (result == OPTTP_OPT) {
+            // any_known = true;
+            opts.sort_comparison = SC_RANDOM;
+            opts.strict = false;
             continue;
         }
 
