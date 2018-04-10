@@ -150,7 +150,9 @@ echo "$machine_gen_message
 #define MYSORT_CONFIG_H
 " > include/mysort/config.h
 
-echo "#define VERSION_STRING \"$version_string\"
+echo "#define VERSION_STRING \"$version_string\"" >> include/mysort/config.h
+
+echo "#define MAX_INPUT_FILES 30000
 " >> include/mysort/config.h
 
 echo "#endif" >> include/mysort/config.h

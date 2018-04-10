@@ -1,1 +1,1 @@
---merge input_1 input_2
+--merge input_1.txt input_2.txt

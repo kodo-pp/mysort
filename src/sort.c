@@ -4,6 +4,7 @@
 #include <mysort/args.h>
 #include <mysort/compare_funcs.h>
 #include <mysort/sort_funcs.h>
+#include <assert.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -32,6 +33,8 @@ static void write_data(char **strs, size_t count) {
         die("strs == NULL (at write_data)");
     }
 
+    //printf("count = %zu\n", count);
+
     for (size_t i = 0; i < count; ++i) {
         if (strs[i] == NULL) {
             die("strs[i] == NULL (at write_data)");
@@ -44,9 +47,7 @@ void sort_process() {
     int count = 0;
     int capacity = 0;
     char **strs = NULL;
-
-    FILE *in;
-
+/*
     if (opts.input_type == IT_STDIN) {
         in = fopen("/dev/stdin", "r");
         if (in == NULL) {
@@ -58,32 +59,52 @@ void sort_process() {
             die("unable to open input file (at read_data)");
         }
     }
+*/
+    if (opts.input_type == IT_STDIN) {
+        assert(MAX_INPUT_FILES >= 1);
+        opts.input_files[0] = "/dev/stdin";
+        opts.input_files[1] = NULL;
+    }
 
-    while (true) {
-        ++count;
-        if (strs == NULL || count > capacity) {
-            capacity *= 2;
-            if (count > capacity) {
-                capacity = count;
+    int fileno = 0;
+    while (fileno <= MAX_INPUT_FILES && opts.input_files[fileno] != NULL) {
+        //fprintf(stderr, "Opening '%s'\n", opts.input_files[fileno]);
+        FILE *in = fopen(opts.input_files[fileno], "r");
+        ++fileno;
+        if (in == NULL) {
+            die("unable to open input file (at read_data)");
+        }
+        while (true) {
+            ++count;
+            if (strs == NULL || count > capacity) {
+                capacity *= 2;
+                if (count > capacity) {
+                    capacity = count;
+                }
+                strs = realloc(strs, capacity * sizeof(char*));
             }
-            strs = realloc(strs, capacity * sizeof(char*));
-        }
-        if (strs == NULL) {
-            die("memory allocation error");
-        }
-        /*
-        strs[count-1] = malloc(65536);
-        fgets(strs[count-1], 65536, in);
-        */
+            if (strs == NULL) {
+                die("memory allocation error");
+            }
+            /*
+            strs[count-1] = malloc(65536);
+            fgets(strs[count-1], 65536, in);
+            */
 
-        size_t length = 0;
-        getline(&strs[count-1], &length, in);
+            size_t length = 0;
+            ssize_t read = getline(&strs[count-1], &length, in);
+            if (read == -1) {
+                --count;
+            }
+            //printf("999: got str: '%s' (%zx), count = %d, length = %zd\n", strs[count - 1], (size_t)strs[count - 1], count, read);
 
-        if (feof(in)) {
-            fclose(in);
-            break;
+            if (feof(in)) {
+                fclose(in);
+                break;
+            }
         }
     }
+    //printf("9count = %d\n", count);
 
     compfunc_t compfunc = get_comparator_func();
     sortfunc_t sortfunc = get_sort_func();
