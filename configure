@@ -25,17 +25,20 @@ show_help()
         echo -e "    \e[1;34m--help\e[0m: показать эту справку"
         echo -e "    \e[1;34m--progname\e[0m=\e[1;36mИМЯ_ИСПОЛНЯЕМОГО_ФАЙЛА\e[0m: присвоить исполняемому файлу имя \e[1mИМЯ_ИСПОЛНЯЕМОГО_ФАЙЛА\e[0m (по умолчанию: \e[1m'mysort'\e[0m)"
         echo -e "    \e[1;34m--disable-werror\e[0m: не использовать флаг компилятора \e[1m-Werror\e[0m"
+        echo -e "    \e[1;34m--abort-on-die\e[0m: использовать функцию \e[1mabort()\e[0m, а не \e[1mexit()\e[0m для аварийного завершения"
     else
         echo -e "\e[1;35mUsage\e[0m: $0 [--help] [--prefix=PREFIX] [--progname=NAME]"
         echo -e "    \e[1;34m--help\e[0m: show this help"
         echo -e "    \e[1;34m--progname\e[0m=\e[1;36mNAME\e[0m: set the name of executable file to \e[1mNAME\e[0m (defaults to \e[1m'mysort'\e[0m)"
         echo -e "    \e[1;34m--disable-werror\e[0m: do not use \e[1m-Werror\e[0m compiler flag"
+        echo -e "    \e[1;34m--abort-on-die\e[0m: use \e[1mabort()\e[0m rather than \e[1mexit()\e[0m for abnormal termination"
     fi
     exit 0
 }
 
 progname="mysort"
 disable_werror="no"
+abort_on_die="no"
 
 while ! [ -z "$1" ]; do
     case $1 in
@@ -48,6 +51,9 @@ while ! [ -z "$1" ]; do
             ;;
         --disable-werror)
             disable_werror="yes"
+            ;;
+        --abort-on-die)
+            abort_on_die="yes"
             ;;
         *)
             if [ $use_ruru == 1 ]; then
@@ -75,6 +81,14 @@ if [ $use_ruru == 1 ]; then
             echo -e "    Использовать флаг компилятора \e[1m-Werror\e[0m"
             ;;
     esac
+    case $abort_on_die in
+            yes)
+                echo -e "    Использовать \e[1mabort()\e[0m для аварийного завершения"
+                ;;
+            *)
+                echo -e "    Использовать \e[1mexit()\e[0m для аварийного завершения"
+                ;;
+    esac
     echo ""
     echo -ne "Продолжить? [д/н]: \e[1m"
 else
@@ -86,6 +100,14 @@ else
             ;;
         *)
             echo -e "    Use \e[1m-Werror\e[0m compiler flag"
+            ;;
+    esac
+    case $abort_on_die in
+        yes)
+            echo -e "    Use \e[1mabort()\e[0m to stop abnormally"
+            ;;
+        *)
+            echo -e "    Use \e[1mexit()\e[0m to stop abnormally"
             ;;
     esac
     echo ""
@@ -154,6 +176,11 @@ echo "#define VERSION_STRING \"$version_string\"" >> include/mysort/config.h
 
 echo "#define MAX_INPUT_FILES 30000
 " >> include/mysort/config.h
+
+if [ "$abort_on_die" == "yes" ]; then
+    echo "#define ABORT_ON_DIE
+" >> include/mysort/config.h
+fi
 
 echo "#endif" >> include/mysort/config.h
 
