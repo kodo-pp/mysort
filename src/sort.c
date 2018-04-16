@@ -75,7 +75,7 @@ void sort_process() {
         FILE *in = fopen(opts.input_files[fileno], "r");
         ++fileno;
         if (in == NULL) {
-            die("unable to open input file (at read_data)");
+            die("unable to open input file (at sort_process)");
         }
         while (true) {
             ++count;
@@ -84,7 +84,11 @@ void sort_process() {
                 if (count > capacity) {
                     capacity = count;
                 }
-                strs = realloc(strs, capacity * sizeof(char*));
+                char **tmp = realloc(strs, capacity * sizeof(char*));
+                if (tmp == NULL) {
+                    die("memory allocation error (at sort_process)");
+                }
+                strs = tmp;
             }
             if (strs == NULL) {
                 die("memory allocation error");
@@ -113,8 +117,11 @@ void sort_process() {
     sortfunc_t sortfunc = get_sort_func();
     sortfunc((const char**)strs, count, compfunc);
     write_data(strs, count);
-    for (int i = 0; i < count; ++i) {
-        free(strs[i]);
+    /* i <= count, NOT i < count (the second one causes memory leak!) */
+    for (int i = 0; i <= count; ++i) {
+        if (strs[i] != NULL) {
+            free(strs[i]);
+        }
     }
     free(strs);
 }

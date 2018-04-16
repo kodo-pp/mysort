@@ -54,9 +54,9 @@ void parse_args(int argc, char **argv) {
     opts.strict = true;
     memset(opts.input_files, 0, sizeof(opts.input_files));
 
-    string_t infile = NULL;
+    /* string_t infile = NULL;*/
 
-    int input_files_count = 0;
+    /* int input_files_count = 0; */
 
     for (int i = 1; i < argc; ++i) {
         bool any_opt = false;
