@@ -18,6 +18,9 @@ static compfunc_t get_comparator_func() {
     case SC_NUMERIC:
         return opts.reversed_sort ? get_reverse_cf(cf_numeric) : cf_numeric;
         break;
+    case SC_HUMAN_NUMERIC:
+        return opts.reversed_sort ? get_reverse_cf(cf_human_numeric) : cf_human_numeric;
+        break;
     case SC_RANDOM:
         return opts.reversed_sort ? get_reverse_cf(cf_random) : cf_random;
         break;

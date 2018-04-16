@@ -5,6 +5,7 @@
 
 compare_t cf_normal(const char *, const char *);
 compare_t cf_numeric(const char *, const char *);
+compare_t cf_human_numeric(const char *, const char *);
 compare_t cf_random(const char *, const char *);
 compfunc_t get_reverse_cf(compfunc_t);
 

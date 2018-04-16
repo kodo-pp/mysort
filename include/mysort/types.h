@@ -22,7 +22,8 @@ enum opt_output_type {
 enum opt_sort_comparison {
     SC_NORMAL = 1,
     SC_NUMERIC = 2,
-    SC_RANDOM = 3
+    SC_RANDOM = 3,
+    SC_HUMAN_NUMERIC = 4
 };
 
 struct _options_t {
