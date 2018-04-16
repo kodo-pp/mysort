@@ -33,6 +33,7 @@ struct _options_t {
     bool reversed_sort;
     string_t program_name;
     string_t input_files[MAX_INPUT_FILES + 1];
+    string_t output_filename;
     bool invalid_flag;
     bool strict;
 };

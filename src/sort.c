@@ -41,11 +41,24 @@ static void write_data(char **strs, size_t count) {
 
     //printf("count = %zu\n", count);
 
+    FILE *outfile = stdout;
+    if (opts.output_filename != NULL) {
+        fprintf(stderr, "opening '%s'\n", opts.output_filename);
+        outfile = fopen(opts.output_filename, "w");
+        if (outfile == NULL) {
+            die("unable to open output file");
+        }
+    }
+
     for (size_t i = 0; i < count; ++i) {
         if (strs[i] == NULL) {
             die("strs[i] == NULL (at write_data)");
         }
-        printf("%s", strs[i]);
+        fprintf(outfile, "%s", strs[i]);
+    }
+
+    if (outfile != stdout && outfile != NULL) {
+        fclose(outfile);
     }
 }
 
