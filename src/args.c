@@ -102,6 +102,26 @@ void parse_args(int argc, char **argv) {
             continue;
         }
 
+        result = get_opt(argv[i], "--numeric");
+        if (result != OPTTP_UNK) {
+            any_opt = true;
+        }
+        if (result == OPTTP_SKIP) {
+            // any_known = true;
+            continue;
+        }
+        if (result == OPTTP_FILE) {
+            // any_known = true;
+            opts.input_type = IT_FILE;
+            /* infile = argv[i]; */ add_file(argv[i]);
+            continue;
+        }
+        if (result == OPTTP_OPT) {
+            // any_known = true;
+            opts.sort_comparison = SC_NUMERIC;
+            continue;
+        }
+
         result = get_opt(argv[i], "-R");
         if (result != OPTTP_UNK) {
             any_opt = true;
@@ -141,26 +161,6 @@ void parse_args(int argc, char **argv) {
             // any_known = true;
             opts.sort_comparison = SC_RANDOM;
             opts.strict = false;
-            continue;
-        }
-
-        result = get_opt(argv[i], "--numeric");
-        if (result != OPTTP_UNK) {
-            any_opt = true;
-        }
-        if (result == OPTTP_SKIP) {
-            // any_known = true;
-            continue;
-        }
-        if (result == OPTTP_FILE) {
-            // any_known = true;
-            opts.input_type = IT_FILE;
-            /* infile = argv[i]; */ add_file(argv[i]);
-            continue;
-        }
-        if (result == OPTTP_OPT) {
-            // any_known = true;
-            opts.sort_comparison = SC_NUMERIC;
             continue;
         }
 
