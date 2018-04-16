@@ -1,3 +1,11 @@
-Usage: ../../mysort [-r] [--reverse] [--help] [FILENAME]
-    -r | --reverse    Reverse sort
-         --help       Show usage information and exit
+Usage: ../../mysort [OPTIONS] [FILENAME [FILENAME ...]]
+OPTIONS:
+    -r | --reverse              Reverse sort
+    -n | --numeric-sort         Sort numbers naturally
+    -R | --random-sort          Shuffle input lines
+    -h | --human-numeric-sort   Naturally sort suffixed numbers like 100K = 100000, 27M = 27000000
+         --immediate-sort       Sort data just as we read it.
+                                    WARNING: this option (--immediate-sort) can only be used when reading from stdin
+    -v | --version              Show version information and exit
+         --help                 Show usage information and exit
+    -o FILE                     Write output to FILE instead of stdout

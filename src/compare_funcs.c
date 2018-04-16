@@ -85,9 +85,7 @@ compare_t cf_human_numeric(const char *first, const char *second) {
         die ("argument is NULL (at cf_human_numeric)");
     }
     bool eqlennumflag = false;
-    //fprintf(stderr, "cfhn: aaa\n");
     for (int i = 0; ; ++i) {
-        //fprintf(stderr, "cfhn: i = %d\n", i);
         if (isdigit(first[i]) && isdigit(second[i]) && !eqlennumflag) {
             int j1 = i;
             int j2 = i;

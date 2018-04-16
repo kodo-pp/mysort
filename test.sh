@@ -89,9 +89,5 @@ for i in test*; do
     cd ..
 done
 
-# FIXME: Не работает
-#echo "=== Summary ==="
-#echo "$tests_count tests total, $passed_tests_count passed, $(($tests_count-$passed_tests_count)) failed"
-
 } | column -t
 exit 0

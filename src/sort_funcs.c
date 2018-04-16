@@ -22,7 +22,6 @@ void sf_comb(const char **data, int count, compfunc_t cmp) {
     }
 
     if (opts.strict) {
-        //fprintf(stderr, "AAAAAAA\n");
         bool is_sorted = false;
         while (!is_sorted) {
             is_sorted = true;
@@ -36,7 +35,6 @@ void sf_comb(const char **data, int count, compfunc_t cmp) {
             }
         }
     }
-    //fprintf(stderr, "BBBBBBB\n");
 }
 
 void sf_insertion(const char **data, int count, compfunc_t cmp) {
