@@ -61,6 +61,64 @@ static void write_data(char **strs, size_t count) {
     }
 }
 
+void immediate_sort_iter(compfunc_t compfunc, const char **strs, int count) {
+    if (strs == NULL) {
+        die("strs == NULL (at immediate_sort_iter)");
+    }
+    int j = count - 1;
+    while (j > 0 && compfunc(strs[j], strs[j - 1]) == CMP_LESS) {
+        const char *tmp = strs[j];
+        strs[j] = strs[j - 1];
+        strs[j - 1] = tmp;
+        --j;
+    }
+}
+
+void immediate_sort_process() {
+    int count = 0;
+    int capacity = 0;
+    char **strs = NULL;
+    compfunc_t compfunc = get_comparator_func();
+
+    while (true) {
+        ++count;
+        if (strs == NULL || count > capacity) {
+            capacity *= 2;
+            if (count > capacity) {
+                capacity = count;
+            }
+            char **tmp = realloc(strs, capacity * sizeof(char*));
+            if (tmp == NULL) {
+                die("memory allocation error (at immediate_sort_process)");
+            }
+            strs = tmp;
+        }
+        if (strs == NULL) {
+            die("memory allocation error (at immediate_sort_process)");
+        }
+
+        size_t length = 0;
+        ssize_t read = getline(&strs[count-1], &length, stdin);
+        if (read == -1) {
+            --count;
+        }
+
+        immediate_sort_iter(compfunc, (const char **)strs, count);
+        if (feof(stdin)) {
+            break;
+        }
+    }
+
+    write_data(strs, count);
+    /* i <= count, NOT i < count (the second one causes memory leak!) */
+    for (int i = 0; i <= count; ++i) {
+        if (strs[i] != NULL) {
+            free(strs[i]);
+        }
+    }
+    free(strs);
+}
+
 void sort_process() {
     int count = 0;
     int capacity = 0;
@@ -106,7 +164,7 @@ void sort_process() {
                 strs = tmp;
             }
             if (strs == NULL) {
-                die("memory allocation error");
+                die("memory allocation error (at sort_process)");
             }
             /*
             strs[count-1] = malloc(65536);

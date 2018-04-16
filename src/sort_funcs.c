@@ -18,7 +18,7 @@ void sf_comb(const char **data, int count, compfunc_t cmp) {
                 data[j+step] = tmp;
             }
         }
-        step /= 1.2473309;
+        step /= 1.2473309; // Оптимальная константа, см. https://ru.wikipedia.org/wiki/Сортировка_расчёской#Реализация_на_C++
     }
 
     if (opts.strict) {

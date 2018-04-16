@@ -29,6 +29,9 @@ int main(int argc, char **argv) {
     case OT_SORT:
         sort_process();
         break;
+    case OT_IMMEDIATE_SORT:
+        immediate_sort_process();
+        break;
     default:
         die("unknown output type (at main)");
         break;

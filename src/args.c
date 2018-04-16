@@ -32,6 +32,9 @@ static int get_opt(string_t opt, const char *pattern) {
 }
 
 void add_file(string_t filename) {
+    if (opts.output_type == OT_IMMEDIATE_SORT) {
+        show_usage_and_exit(1);
+    }
     static int input_files_count = 0;
     if (input_files_count + 1 > MAX_INPUT_FILES) {
         die("too many input files");
@@ -307,6 +310,29 @@ void parse_args(int argc, char **argv) {
 
             opts.output_filename = argv[i];
 
+            continue;
+        }
+
+        result = get_opt(argv[i], "--immediate-sort");
+        if (result != OPTTP_UNK) {
+            any_opt = true;
+        }
+        if (result == OPTTP_SKIP) {
+            // any_known = true;
+            continue;
+        }
+        if (result == OPTTP_FILE) {
+            // any_known = true;
+            opts.input_type = IT_FILE;
+            /* infile = argv[i]; */ add_file(argv[i]);
+            continue;
+        }
+        if (result == OPTTP_OPT) {
+            // any_known = true;
+            opts.output_type = OT_IMMEDIATE_SORT;
+            if (opts.input_type != IT_STDIN) {
+                show_usage_and_exit(1);
+            }
             continue;
         }
 

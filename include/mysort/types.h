@@ -16,7 +16,8 @@ enum opt_input_type {
 enum opt_output_type {
     OT_SORT = 1,
     OT_USAGE,
-    OT_VERSION
+    OT_VERSION,
+    OT_IMMEDIATE_SORT
 };
 
 enum opt_sort_comparison {
