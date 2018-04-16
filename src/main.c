@@ -8,9 +8,32 @@
 #include <mysort/sort.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+static void random_init() {
+    bool good_random = true;
+    int fd = open("/dev/urandom", O_RDONLY);
+    if (fd == -1) {
+        good_random = false;
+    }
+    int state = 0;
+    if (good_random) {
+        char buf[sizeof(state)];
+        if (read(fd, buf, sizeof(buf)) == -1) {
+            close(fd);
+            goto bad_random;
+        }
+        memcpy(&state, buf, sizeof(state));
+    } else {
+    bad_random:
+        state = time(NULL);
+    }
+    srand(state);
+}
 
 int main(int argc, char **argv) {
-    srand(time(NULL));
+    random_init();
     memset(&opts, 0, sizeof(opts));
 
     parse_args(argc, argv);
