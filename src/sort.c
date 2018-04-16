@@ -43,7 +43,6 @@ static void write_data(char **strs, size_t count) {
 
     FILE *outfile = stdout;
     if (opts.output_filename != NULL) {
-        fprintf(stderr, "opening '%s'\n", opts.output_filename);
         outfile = fopen(opts.output_filename, "w");
         if (outfile == NULL) {
             die("unable to open output file");

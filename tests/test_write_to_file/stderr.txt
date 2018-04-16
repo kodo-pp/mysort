@@ -1,1 +1,0 @@
-opening 'test_output_file.txt'

@@ -103,7 +103,7 @@ void parse_args(int argc, char **argv) {
             continue;
         }
 
-        result = get_opt(argv[i], "--numeric");
+        result = get_opt(argv[i], "--numeric-sort");
         if (result != OPTTP_UNK) {
             any_opt = true;
         }
