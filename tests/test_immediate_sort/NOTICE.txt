@@ -1,0 +1,2 @@
+Not testing the exact behavior, but just making sure porgram accepts the --immediate-sort
+option and sorts data correctly

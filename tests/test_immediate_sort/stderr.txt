@@ -1,0 +1,3 @@
+Usage: ../../mysort [-r] [--reverse] [--help] [FILENAME]
+    -r | --reverse    Reverse sort
+         --help       Show usage information and exit
