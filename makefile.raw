@@ -15,7 +15,7 @@ LIBS = \
 
 CC=cc
 LDFLAGS?=
-CFLAGS=-std=gnu99 -Wall -Wextra -pedantic $(WERROR_FLAG) -Iinclude/
+CFLAGS=-std=gnu99 -Wall -Wextra -pedantic $(WERROR_FLAG) -Iinclude/ -O2
 
 .PHONY: all clean distclean ee bee run check
 
